@@ -55,6 +55,7 @@ Follow these steps to set up and run the project:
     ```bash
     php artisan migrate
     php artisan key:generate
+    php artisan serve
     ```
 
 6. **Access the Application Open your web browser and navigate to:**
