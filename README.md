@@ -31,7 +31,7 @@ Follow these steps to set up and run the project:
 2. **Navigate to the Project Root Directory**
 
     ```bash
-    cd url_shorter
+    cd url_shorter_system
 
     ```
 
