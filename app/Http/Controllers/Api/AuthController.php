@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
+use Exception;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -14,19 +16,15 @@ class AuthController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:user,email',
+                'email' => 'required|email|max:255|unique:users,email',
                 'password' => 'required|min:8',
-                'created_by' => 'required',
-                'created_by_ip' => 'required',
-                'phone' => 'required',
             ]);
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
-
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -35,24 +33,22 @@ class AuthController extends Controller
                 "data" => $user,
                 "token" => $token
             ], 201);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
 
             return response()->json([
                 "status" => "error",
                 "message" => "Validation failed. Error: " . $e->getMessage()
             ], 422);
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 "status" => "error",
                 "message" => "Failed to save. Please try again. Error: " . $e->getMessage()
             ], 500);
         }
-
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         //return $request;
 
@@ -69,5 +65,4 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
-
 }
