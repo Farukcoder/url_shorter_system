@@ -8,6 +8,6 @@ use App\Http\Controllers\Api\ShortenedUrlController;
 Route::post('/user/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/user/register', [AuthController::class, 'store'])->name('user.register');
 
-Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
-     Route::apiResource('url-shorten', ShortenedUrlController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('url-shorten', ShortenedUrlController::class);
 });
