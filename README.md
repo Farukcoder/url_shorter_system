@@ -1,7 +1,7 @@
 # Url Shorter System
 
 ## Prerequisites
-
+-   Laravel >= ^11.9
 -   PHP >= 8.2
 -   Ctype PHP Extension
 -   cURL PHP Extension
