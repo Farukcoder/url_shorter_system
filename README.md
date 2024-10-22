@@ -58,6 +58,6 @@ Follow these steps to set up and run the project:
 
 6. **Access the Application Open your web browser and navigate to:**
     ```bash
-    http://localhost:8000
+    http://127.0.0.1:8000
     ```
 7. **After that register and then login**
